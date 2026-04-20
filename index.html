@@ -1,124 +1,617 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<title>XXX - Embodied AI</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>你的名字 - Embodied AI / VLA Research</title>
+  <style>
+    :root {
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --text: #1f2a37;
+      --subtext: #5b6472;
+      --line: #d9e0ea;
+      --accent: #1d4ed8;
+      --accent-light: #e8f0ff;
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      --max-width: 1120px;
+    }
 
-<style>
-body {
-    font-family: Arial, sans-serif;
-    max-width: 900px;
-    margin: 40px auto;
-    color: #222;
-    line-height: 1.6;
-}
+    * {
+      box-sizing: border-box;
+    }
 
-h1 { margin-bottom: 5px; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-h2 {
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 5px;
-    margin-top: 40px;
-}
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
 
-.pub {
-    margin-bottom: 15px;
-}
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
 
-.metric-box {
-    display: flex;
-    gap: 40px;
-    margin-top: 10px;
-}
+    a:hover {
+      text-decoration: underline;
+    }
 
-.metric {
-    font-size: 18px;
-}
+    .container {
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto;
+    }
 
-.tag {
-    display: inline-block;
-    background: #eef;
-    padding: 2px 6px;
-    margin-right: 5px;
-    font-size: 12px;
-}
-</style>
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247, 249, 252, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-height: 64px;
+      gap: 16px;
+    }
+
+    .brand {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      font-size: 14px;
+    }
+
+    .hero {
+      padding: 56px 0 28px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 0.9fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-main {
+      padding: 32px;
+    }
+
+    .hero-side {
+      padding: 28px;
+    }
+
+    .name {
+      font-size: 38px;
+      font-weight: 800;
+      margin: 0 0 8px;
+      letter-spacing: 0.3px;
+    }
+
+    .title-line {
+      font-size: 18px;
+      color: var(--subtext);
+      margin-bottom: 18px;
+    }
+
+    .bio {
+      color: var(--subtext);
+      font-size: 16px;
+      margin-bottom: 22px;
+    }
+
+    .tag-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .tag {
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1px solid #cddcff;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--accent);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn.secondary {
+      background: white;
+      color: var(--accent);
+    }
+
+    .info-list {
+      display: grid;
+      gap: 14px;
+      font-size: 15px;
+    }
+
+    .info-item strong {
+      display: inline-block;
+      width: 90px;
+      color: var(--text);
+    }
+
+    .section {
+      padding: 18px 0 8px;
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 800;
+      margin: 0 0 16px;
+    }
+
+    .section-desc {
+      color: var(--subtext);
+      margin: 0 0 22px;
+    }
+
+    .project-card {
+      padding: 26px;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      gap: 16px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .project-title {
+      font-size: 24px;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .project-subtitle {
+      font-size: 15px;
+      color: var(--subtext);
+      margin: 4px 0 0;
+    }
+
+    .badge {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #cddcff;
+      white-space: nowrap;
+    }
+
+    .project-summary {
+      margin: 14px 0 18px;
+      color: var(--subtext);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .subcard {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      background: #fcfdff;
+    }
+
+    .subcard h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .placeholder {
+      border: 2px dashed #bfd0ea;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #f8fbff 0%, #eef5ff 100%);
+      min-height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #5f6f86;
+      text-align: center;
+      padding: 24px;
+      font-size: 15px;
+    }
+
+    .pipeline-img,
+    .result-img {
+      width: 100%;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      display: block;
+      background: #fff;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 620px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f4f7fb;
+      font-weight: 700;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .result-note {
+      margin-top: 12px;
+      color: var(--subtext);
+      font-size: 14px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .video-box {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fff;
+    }
+
+    .video-box h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    video, iframe {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #000;
+      aspect-ratio: 16 / 9;
+    }
+
+    .footer {
+      padding: 36px 0 60px;
+      color: var(--subtext);
+      font-size: 14px;
+    }
+
+    .mini-list {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--subtext);
+    }
+
+    .mini-list li {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .two-col,
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .name {
+        font-size: 31px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="nav">
+    <div class="container nav-inner">
+      <div class="brand">你的名字 / VLA Research</div>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#project">Project</a>
+        <a href="#pipeline">Pipeline</a>
+        <a href="#results">Results</a>
+        <a href="#videos">Videos</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </div>
 
-<h1>你的名字</h1>
-<p>
-Embodied AI Researcher <br>
-Affiliation: XXX Lab / University <br>
-Email: xxx@email.com <br>
-<a href="https://scholar.google.com/citations?user=jOvRRIMAAAAJ">Google Scholar</a>
-</p>
+  <header class="hero" id="about">
+    <div class="container hero-grid">
+      <div class="card hero-main">
+        <h1 class="name">你的名字</h1>
+        <div class="title-line">Embodied AI Researcher · Vision-Language-Action · Robot Manipulation</div>
+        <div class="bio">
+          我当前的研究聚焦于 Vision-Language-Action 模型在真实机器人操作中的建模、适配与部署，
+          关注多模态观测、动作表示、低资源微调以及仿真到真实系统迁移。
+        </div>
+        <div class="tag-list">
+          <span class="tag">VLA</span>
+          <span class="tag">Robot Manipulation</span>
+          <span class="tag">Policy Learning</span>
+          <span class="tag">ROS2 / Isaac Sim</span>
+          <span class="tag">Sim2Real</span>
+        </div>
+        <div class="button-row">
+          <a class="btn primary" href="#project">View Project</a>
+          <a class="btn secondary" href="https://scholar.google.com/citations?user=jOvRRIMAAAAJ&hl=zh-CN" target="_blank">Google Scholar</a>
+          <a class="btn secondary" href="https://github.com/zzzloop" target="_blank">GitHub</a>
+        </div>
+      </div>
 
-<!-- Metrics -->
-<div class="metric-box">
-  <div class="metric">Citations: XXX</div>
-  <div class="metric">h-index: XX</div>
-  <div class="metric">Publications: XX</div>
-</div>
+      <div class="card hero-side">
+        <div class="info-list">
+          <div class="info-item"><strong>Affiliation</strong> 你的学校 / 实验室</div>
+          <div class="info-item"><strong>Email</strong> your_email@example.com</div>
+          <div class="info-item"><strong>Focus</strong> VLA, Manipulation, Action Representation</div>
+          <div class="info-item"><strong>Platform</strong> Dual-arm Humanoid / Isaac Sim / Vision Pro</div>
+          <div class="info-item"><strong>Scholar</strong> <a href="https://scholar.google.com/citations?user=jOvRRIMAAAAJ&hl=zh-CN" target="_blank">Profile Link</a></div>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<h2>Research Interests</h2>
-<p>
-Vision-Language-Action (VLA), Robot Manipulation, Multimodal Learning, Sim2Real
-</p>
+  <main class="container">
+    <section class="section" id="project">
+      <div class="card project-card">
+        <div class="project-header">
+          <div>
+            <h2 class="project-title">Project Title: OpenVLA / π0.5 Adaptation for Dual-arm Humanoid Manipulation</h2>
+            <div class="project-subtitle">一个面向真实机器人精细操作的 VLA 适配与验证框架示例页</div>
+          </div>
+          <div class="badge">Ongoing Research</div>
+        </div>
 
-<h2>Selected Publications</h2>
+        <p class="project-summary">
+          本项目面向双臂半人形机器人操作任务，围绕通用 VLA 基座模型在自定义动作空间、三相机输入、
+          低资源微调与仿真验证场景中的落地问题展开，重点解决动作维度不匹配、观测接口适配、
+          评测闭环不完整以及展示材料不规范等问题。
+        </p>
 
-<div class="pub">
-<b>论文标题1</b><br>
-作者, 作者, 作者 <br>
-<i>Conference / Journal, Year</i><br>
-<a href="#">[PDF]</a> <a href="#">[Code]</a>
-</div>
+        <div class="two-col">
+          <div class="subcard">
+            <h3>Problem Setting</h3>
+            <ul class="mini-list">
+              <li>将通用 VLA 模型适配到 23-DoF 双臂半人形机器人。</li>
+              <li>支持多相机输入与状态观测联合建模。</li>
+              <li>在 Isaac Sim 中建立推理与评测闭环。</li>
+              <li>面向真实系统部署保留统一接口。</li>
+            </ul>
+          </div>
 
-<div class="pub">
-<b>论文标题2</b><br>
-作者... <br>
-<i>Conference / Journal, Year</i><br>
-<a href="#">[PDF]</a>
-</div>
+          <div class="subcard">
+            <h3>Key Contributions</h3>
+            <ul class="mini-list">
+              <li>构建自定义动作空间对齐方案。</li>
+              <li>支持多视角视觉输入与策略推理集成。</li>
+              <li>预留实验对比、可视化与视频展示位。</li>
+              <li>形成适合科研汇报和主页展示的项目结构。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<h2>Projects</h2>
+    <section class="section" id="pipeline">
+      <h2 class="section-title">Pipeline</h2>
+      <p class="section-desc">
+        这一部分放你的整体方法图。建议放一张论文风格的总框图，清楚标出输入、编码器、策略模块、动作输出和仿真/真实执行链路。
+      </p>
 
-<div class="pub">
-<b>OpenVLA Adaptation on Dual-arm Robot</b><br>
-<span class="tag">VLA</span>
-<span class="tag">Embodied AI</span>
-<p>
-Extended OpenVLA to 23-DoF humanoid robot with custom action space alignment.
-</p>
-</div>
+      <div class="card project-card">
+        <div class="subcard">
+          <h3>Pipeline Figure</h3>
 
-<div class="pub">
-<b>π0.5 Fine-tuning</b><br>
-<span class="tag">Policy</span>
-<span class="tag">LoRA</span>
-<p>
-Low-resource adaptation with 70 episodes dataset.
-</p>
-</div>
+          <!-- 用图片时，取消下面这行注释，并把文件放到 images/pipeline.png -->
+          <!-- <img class="pipeline-img" src="images/pipeline.png" alt="Pipeline Figure"> -->
 
-<div class="pub">
-<b>Vision Pro Teleoperation</b><br>
-<span class="tag">XR</span>
-<span class="tag">ROS2</span>
-<p>
-Vision Pro → ROS2 → Isaac Sim → Robot pipeline.
-</p>
-</div>
+          <div class="placeholder">
+            <div>
+              <strong>这里放你的 pipeline 图</strong><br><br>
+              推荐文件路径：<code>images/pipeline.png</code><br>
+              推荐尺寸：宽图，1600×900 或更高<br>
+              内容建议：Observation → Visual Encoder → Policy → Action Chunk → Robot / Simulator
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<h2>Experience</h2>
-<ul>
-<li>Embodied AI Lab, XXX University</li>
-</ul>
+    <section class="section" id="results">
+      <h2 class="section-title">Experimental Results</h2>
+      <p class="section-desc">
+        这一部分放核心实验结果。建议同时放结果表格和可视化结果图，不要只放一项。
+      </p>
 
-<h2>Contact</h2>
-<p>Email: xxx@email.com</p>
+      <div class="card project-card">
+        <div class="two-col">
+          <div class="subcard">
+            <h3>Quantitative Results</h3>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Method</th>
+                    <th>Task</th>
+                    <th>Success Rate</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Baseline A</td>
+                    <td>Pick-and-Place</td>
+                    <td>62.5%</td>
+                    <td>原始动作空间</td>
+                  </tr>
+                  <tr>
+                    <td>Baseline B</td>
+                    <td>Pick-and-Place</td>
+                    <td>71.3%</td>
+                    <td>加入多视角输入</td>
+                  </tr>
+                  <tr>
+                    <td>Our Method</td>
+                    <td>Pick-and-Place</td>
+                    <td>84.7%</td>
+                    <td>动作对齐 + 微调</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="result-note">
+              这里替换成你的真实结果。可以加入更多指标，例如 grasp success、completion rate、trajectory error、inference latency。
+            </div>
+          </div>
 
+          <div class="subcard">
+            <h3>Qualitative Results</h3>
+
+            <!-- 用图片时，取消下面这行注释 -->
+            <!-- <img class="result-img" src="images/results_vis.png" alt="Qualitative Results"> -->
+
+            <div class="placeholder">
+              <div>
+                <strong>这里放实验可视化图</strong><br><br>
+                推荐内容：<br>
+                成功/失败案例对比、轨迹可视化、抓取序列帧、动作热力图、仿真截图
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="videos">
+      <h2 class="section-title">Videos</h2>
+      <p class="section-desc">
+        这一部分放项目视频。可以放本地 MP4，也可以嵌入 Bilibili 或 YouTube 链接。科研主页建议至少保留一个仿真视频和一个真实系统视频。
+      </p>
+
+      <div class="card project-card">
+        <div class="video-grid">
+          <div class="video-box">
+            <h3>Simulation Demo</h3>
+
+            <!-- 本地视频示例：把文件放到 videos/sim_demo.mp4 -->
+            <!--
+            <video controls>
+              <source src="videos/sim_demo.mp4" type="video/mp4">
+              你的浏览器不支持 video 标签。
+            </video>
+            -->
+
+            <div class="placeholder">
+              <div>
+                <strong>这里放仿真视频</strong><br><br>
+                推荐文件路径：<code>videos/sim_demo.mp4</code><br>
+                建议展示：任务执行全过程、视角切换、成功/失败对比
+              </div>
+            </div>
+          </div>
+
+          <div class="video-box">
+            <h3>Real-world Demo</h3>
+
+            <!-- 本地视频示例 -->
+            <!--
+            <video controls>
+              <source src="videos/real_demo.mp4" type="video/mp4">
+              你的浏览器不支持 video 标签。
+            </video>
+            -->
+
+            <!-- 外链 iframe 示例（需要时自行替换链接）
+            <iframe src="https://www.youtube.com/embed/你的链接ID" title="Real-world Demo" allowfullscreen></iframe>
+            -->
+
+            <div class="placeholder">
+              <div>
+                <strong>这里放真实机器人视频</strong><br><br>
+                推荐文件路径：<code>videos/real_demo.mp4</code><br>
+                建议展示：真实抓取、放置、失败恢复、不同场景泛化
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <h2 class="section-title">Contact</h2>
+      <div class="card project-card">
+        <p><strong>Email:</strong> your_email@example.com</p>
+        <p><strong>GitHub:</strong> <a href="https://github.com/zzzloop" target="_blank">https://github.com/zzzloop</a></p>
+        <p><strong>Google Scholar:</strong> <a href="https://scholar.google.com/citations?user=jOvRRIMAAAAJ&hl=zh-CN" target="_blank">Scholar Profile</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    © 2026 你的名字. Built with GitHub Pages.
+  </footer>
 </body>
 </html>
